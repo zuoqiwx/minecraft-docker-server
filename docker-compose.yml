@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  server:
+    build: .
+    container_name: minecraft-server
+    env_file:
+      - server.env
+    ports:
+      - 25565:25565
+    volumes:
+      - /Users/zuoqiwang/Documents/Minecraft/server-data:/minecraft/server
