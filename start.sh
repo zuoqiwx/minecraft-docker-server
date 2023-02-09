@@ -2,6 +2,7 @@
 
 # CLI options
 init_only=0
+mod_loader="vanilla"
 saving_server_opts=0
 extra_server_opts=""
 while [ $# -gt 0 ]; do
@@ -9,6 +10,9 @@ while [ $# -gt 0 ]; do
     case $key in
     --init-only)
         init_only=1
+        ;;
+    --fabric)
+        mod_loader="fabric"
         ;;
     --)
         saving_server_opts=1
@@ -26,14 +30,27 @@ done
 uname -a
 java --version
 
-# files and dirs
-server_jar="../bin/server-1.19.3.jar"
-server_data_dir="server"
-if [ ! -d "$server_data_dir" ]; then
+# mod loader
+case $mod_loader in
+vanilla)
+    server_jar="../bin/server-1.19.3.jar"
+    ;;
+fabric)
+    server_jar="../bin/fabric-server-mc.1.19.3-loader.0.14.14-launcher.0.11.1.jar"
+    ;;
+*)
+    echo "Error: Invalid mod loader provided: $mod_loader"
+    exit 1
+    ;;
+esac
+
+# server data directory
+data_dir="server"
+if [ ! -d "$data_dir" ]; then
     echo "Error: Server data directory does not exist"
     exit 1
 fi
-cd $server_data_dir || exit 1
+cd $data_dir || exit 1
 
 # init server
 if [ "$init_only" -eq 1 ]; then

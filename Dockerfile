@@ -1,5 +1,6 @@
 FROM --platform=linux/amd64 openjdk:jdk
 EXPOSE 25565
+EXPOSE 25575
 
 ARG version=1.19.3
 ENV JVM_MEMORY_MAX=1G
